@@ -1,0 +1,30 @@
+version: "3.1"
+
+services:
+  master:
+    image: localhost:5000/ch04/mysql:latest
+    deploy:
+      replicas: 1
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: gihyo 
+      MYSQL_DATABASE: tododb 
+      MYSQL_USER: gihyo 
+      MYSQL_PASSWORD: gihyo 
+      MYSQL_MASTER: "true" 
+
+  slave:
+    image: localhost:5000/ch04/mysql:latest
+    deploy:
+      replicas: 2
+    depends_on:
+      - master
+    environment:
+      MYSQL_ROOT_PASSWORD: gihyo 
+      MYSQL_DATABASE: tododb 
+      MYSQL_USER: gihyo 
+      MYSQL_PASSWORD: gihyo 
+      MYSQL_ROOT_PASSWORD: gihyo 
+      MYSQL_REPL_USER: repl 
+      MYSQL_REPL_PASSWORD: gihyo 

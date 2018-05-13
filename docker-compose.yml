@@ -1,0 +1,26 @@
+version: "3.1"
+
+services:
+  master:
+    image: stormcat24/mysql:latest
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: gihyo 
+      MYSQL_DATABASE: tododb 
+      MYSQL_USER: gihyo 
+      MYSQL_PASSWORD: gihyo 
+      MYSQL_MASTER: "true" 
+
+  slave:
+    image: stormcat24/mysql:latest
+    depends_on:
+      - master
+    environment:
+      MYSQL_ROOT_PASSWORD: gihyo
+      MYSQL_DATABASE: tododb
+      MYSQL_USER: gihyo
+      MYSQL_PASSWORD: gihyo
+      MYSQL_ROOT_PASSWORD: gihyo
+      MYSQL_REPL_USER: repl
+      MYSQL_REPL_PASSWORD: gihyo
