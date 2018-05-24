@@ -8,12 +8,12 @@ RUN rm entrykit_0.4.0_linux_x86_64.tgz
 RUN mv entrykit /usr/local/bin/
 RUN entrykit --symlink
 
-ADD add-server-id.sh /usr/local/bin/
-ADD init-data.sh /usr/local/bin/
-ADD etc/mysql/mysql.conf.d/mysqld.cnf /etc/mysql/mysql.conf.d/
-ADD etc/mysql/conf.d/mysql.cnf /etc/mysql/conf.d/
-ADD prepare.sh /docker-entrypoint-initdb.d
-ADD sql /sql
+COPY add-server-id.sh /usr/local/bin/
+COPY init-data.sh /usr/local/bin/
+COPY etc/mysql/mysql.conf.d/mysqld.cnf /etc/mysql/mysql.conf.d/
+COPY etc/mysql/conf.d/mysql.cnf /etc/mysql/conf.d/
+COPY prepare.sh /docker-entrypoint-initdb.d
+COPY sql /sql
 
 ENTRYPOINT [ \
   "prehook", \
