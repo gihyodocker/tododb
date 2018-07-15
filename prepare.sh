@@ -26,8 +26,12 @@ do
 done
 
 # (3) Masterにレプリケーション用のユーザーと権限の作成
-mysql -h $MYSQL_MASTER_HOST -u root -p$MYSQL_ROOT_PASSWORD -e "CREATE USER '$MYSQL_REPL_USER'@'`hostname -i`' IDENTIFIED BY '$MYSQL_REPL_PASSWORD';"
-mysql -h $MYSQL_MASTER_HOST -u root -p$MYSQL_ROOT_PASSWORD -e "GRANT REPLICATION SLAVE ON *.* TO '$MYSQL_REPL_USER'@'`hostname -i`';"
+IP=`hostname -i`
+IFS='.'
+set -- $IP
+SOURCE_IP="$1.$2.%.%"
+mysql -h $MYSQL_MASTER_HOST -u root -p$MYSQL_ROOT_PASSWORD -e "CREATE USER IF NOT EXISTS '$MYSQL_REPL_USER'@'$SOURCE_IP' IDENTIFIED BY '$MYSQL_REPL_PASSWORD';"
+mysql -h $MYSQL_MASTER_HOST -u root -p$MYSQL_ROOT_PASSWORD -e "GRANT REPLICATION SLAVE ON *.* TO '$MYSQL_REPL_USER'@'$SOURCE_IP';"
 
 # (4) Masterのbinlogのポジションを取得
 MASTER_STATUS_FILE=/tmp/master-status
