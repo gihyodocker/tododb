@@ -3,7 +3,7 @@
 # (1) MasterとSlaveを環境変数で制御する
 if [ ! -z "$MYSQL_MASTER" ]; then
   echo "this container is master"
-  return 0
+  exit 0
 fi
 
 echo "prepare as slave"
@@ -11,7 +11,7 @@ echo "prepare as slave"
 # (2) SlaveからMasterへの疎通確認をする
 if [ -z "$MYSQL_MASTER_HOST" ]; then
   echo "mysql_master_host is not specified" 1>&2
-  return 1
+  exit 1
 fi
 
 while :
