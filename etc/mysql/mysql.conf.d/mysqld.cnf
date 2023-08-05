@@ -12,5 +12,5 @@ symbolic-links=0
 relay-log=mysqld-relay-bin 
 relay-log-index=mysqld-relay-bin 
 
-log-bin=/var/log/mysql/mysql-bin.log
+log-bin=/var/lib/mysql/mysql-bin.index
 
