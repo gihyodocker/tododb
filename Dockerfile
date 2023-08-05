@@ -1,8 +1,10 @@
 FROM mysql:5.7
 
 # (1) パッケージアップデートとwgetインストール
-RUN apt-get update
-RUN apt-get install -y wget
+RUN yum update -y
+RUN yum install -y wget
+RUN yum install -y hostname
+
 
 # (2) entrykitのインストール
 RUN wget https://github.com/progrium/entrykit/releases/download/v0.4.0/entrykit_0.4.0_linux_x86_64.tgz
@@ -22,9 +24,9 @@ COPY sql /sql
 # (4) スクリプトとmysqldの実行
 ENTRYPOINT [ \
   "prehook", \
-    "add-server-id.sh", \
-    "--", \
+  "add-server-id.sh", \
+  "--", \
   "docker-entrypoint.sh" \
-]
+  ]
 
 CMD ["mysqld"]
